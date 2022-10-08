@@ -7,12 +7,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.edugobeti.cursomc.domain.Adress;
 import com.edugobeti.cursomc.domain.Category;
 import com.edugobeti.cursomc.domain.City;
+import com.edugobeti.cursomc.domain.Client;
 import com.edugobeti.cursomc.domain.Product;
 import com.edugobeti.cursomc.domain.State;
+import com.edugobeti.cursomc.domain.enuns.ClientType;
+import com.edugobeti.cursomc.repository.AdressRepository;
 import com.edugobeti.cursomc.repository.CategoryRepository;
 import com.edugobeti.cursomc.repository.CityRepository;
+import com.edugobeti.cursomc.repository.ClientRepository;
 import com.edugobeti.cursomc.repository.ProductRepository;
 import com.edugobeti.cursomc.repository.StateRepository;
 
@@ -29,6 +34,12 @@ public class CursomcApplication implements CommandLineRunner{
 	
 	@Autowired
 	CityRepository cityRepository;
+	
+	@Autowired
+	ClientRepository clientRepository;
+	
+	@Autowired
+	AdressRepository adressRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -66,8 +77,20 @@ public class CursomcApplication implements CommandLineRunner{
 		stt2.getCities().addAll(Arrays.asList(c2, c3));
 		
 		stateRepository.saveAll(Arrays.asList(stt1, stt2));
-	    cityRepository.saveAll(Arrays.asList(c1, c2, c3));	
+	    cityRepository.saveAll(Arrays.asList(c1, c2, c3));
+	    
+	    Client cli1 = new Client(null, "Maria Silva", "maria@gmail.com", "35226554885", ClientType.PESSOAFISICA);
+	    
+	    cli1.getPhone().addAll(Arrays.asList("35662595", "99896354"));
+	    
+	    Adress a1 = new Adress(null, "Rua Flores", "300", "apartamento 203", "Bairro Jardim", "13455678", cli1, c1);
+	    Adress a2 = new Adress(null, "Av Matos", "103", "Sala 800", "Centro", "01258336", cli1, c2);
+	    
+	    cli1.getAdresses().addAll(Arrays.asList(a1, a2));
 		
+	    clientRepository.saveAll(Arrays.asList(cli1));
+	    
+	    adressRepository.saveAllAndFlush(Arrays.asList(a1, a2));
 	}
 
 }
