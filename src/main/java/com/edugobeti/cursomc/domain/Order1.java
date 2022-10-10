@@ -15,8 +15,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Order1 implements Serializable {
@@ -26,9 +27,10 @@ public class Order1 implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date instant;
 	
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private Client client;
@@ -37,6 +39,7 @@ public class Order1 implements Serializable {
 	@JoinColumn(name = "adressShipp_id")
 	private Adress adressShipp;
 	
+	@JsonManagedReference
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
 	private Payment payment;
 

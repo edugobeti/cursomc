@@ -5,20 +5,20 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.edugobeti.cursomc.domain.Adress;
-import com.edugobeti.cursomc.repository.AdressRepository;
+import com.edugobeti.cursomc.domain.Order1;
+import com.edugobeti.cursomc.repository.Order1Repository;
 import com.edugobeti.cursomc.service.exception.ObjectNotFoundException;
 
 @Service
-public class AdressService {
+public class Order1Service {
 
 	@Autowired
-	private AdressRepository repo;
+	private Order1Repository repo;
 	
-	public Adress find(Integer id) {
-		Optional<Adress> obj = repo.findById(id);
+	public Order1 find(Integer id) {
+		Optional<Order1> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				 "Objeto não encontrado! Id: " + id + ", Tipo: " + Adress.class.getName()));
+				 "Objeto não encontrado! Id: " + id + ", Tipo: " + Order1.class.getName()));
 
 	}
 }

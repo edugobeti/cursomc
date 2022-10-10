@@ -5,9 +5,12 @@ import java.util.Objects;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class OrderItem {
 
+	@JsonIgnore
 	@EmbeddedId
 	private OrderItemPK id = new OrderItemPK();
 	
@@ -27,6 +30,7 @@ public class OrderItem {
 		this.price = price;
 	}
 
+	@JsonIgnore
 	public Order1 getOrder() {
 		return id.getOrder();
 	}

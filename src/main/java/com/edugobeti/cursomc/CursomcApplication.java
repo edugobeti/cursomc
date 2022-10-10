@@ -26,7 +26,7 @@ import com.edugobeti.cursomc.repository.CategoryRepository;
 import com.edugobeti.cursomc.repository.CityRepository;
 import com.edugobeti.cursomc.repository.ClientRepository;
 import com.edugobeti.cursomc.repository.OrderItemRepository;
-import com.edugobeti.cursomc.repository.OrderRepository;
+import com.edugobeti.cursomc.repository.Order1Repository;
 import com.edugobeti.cursomc.repository.PaymentRepository;
 import com.edugobeti.cursomc.repository.ProductRepository;
 import com.edugobeti.cursomc.repository.StateRepository;
@@ -52,7 +52,7 @@ public class CursomcApplication implements CommandLineRunner{
 	AdressRepository adressRepository;
 	
 	@Autowired
-	OrderRepository orderRepository;
+	Order1Repository orderRepository;
 	
 	@Autowired
 	PaymentRepository paymentRepository;
