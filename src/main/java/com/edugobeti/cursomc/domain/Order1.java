@@ -30,7 +30,6 @@ public class Order1 implements Serializable {
 	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date instant;
 	
-	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private Client client;
@@ -39,7 +38,6 @@ public class Order1 implements Serializable {
 	@JoinColumn(name = "adressShipp_id")
 	private Adress adressShipp;
 	
-	@JsonManagedReference
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
 	private Payment payment;
 
