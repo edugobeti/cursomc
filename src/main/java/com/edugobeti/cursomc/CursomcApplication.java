@@ -14,6 +14,7 @@ import com.edugobeti.cursomc.domain.City;
 import com.edugobeti.cursomc.domain.Client;
 import com.edugobeti.cursomc.domain.CreditPayment;
 import com.edugobeti.cursomc.domain.Order1;
+import com.edugobeti.cursomc.domain.OrderItem;
 import com.edugobeti.cursomc.domain.Payment;
 import com.edugobeti.cursomc.domain.Product;
 import com.edugobeti.cursomc.domain.State;
@@ -24,6 +25,7 @@ import com.edugobeti.cursomc.repository.AdressRepository;
 import com.edugobeti.cursomc.repository.CategoryRepository;
 import com.edugobeti.cursomc.repository.CityRepository;
 import com.edugobeti.cursomc.repository.ClientRepository;
+import com.edugobeti.cursomc.repository.OrderItemRepository;
 import com.edugobeti.cursomc.repository.OrderRepository;
 import com.edugobeti.cursomc.repository.PaymentRepository;
 import com.edugobeti.cursomc.repository.ProductRepository;
@@ -54,6 +56,8 @@ public class CursomcApplication implements CommandLineRunner{
 	
 	@Autowired
 	PaymentRepository paymentRepository;
+	@Autowired
+	OrderItemRepository	orderItemRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -115,13 +119,28 @@ public class CursomcApplication implements CommandLineRunner{
 	   
 	    Payment pay1 = new CreditPayment(null, PaymentStatus.QUITADO, o1, 6);
 	    o1.setPayment(pay1);
-	    
 	    Payment pay2 = new TicketPayment(null, PaymentStatus.PENDENTE, o2, sdf.parse("20/10/2017 00:00"), null);
 	    o2.setPayment(pay2);
 	    		
 	    orderRepository.saveAll(Arrays.asList(o1, o2));
 	   
 	    paymentRepository.saveAll(Arrays.asList(pay1, pay2));
+	
+	    OrderItem oi1 = new OrderItem(o1, p1, 0.0, 1, 2000.0);
+	    OrderItem oi2 = new OrderItem(o1, p2, 0.0, 2, 80.0);
+	    OrderItem oi3 = new OrderItem(o2, p3, 100.0, 1, 800.0);
+	    
+	    o1.getItens().addAll(Arrays.asList(oi1, oi2));
+	    o2.getItens().addAll(Arrays.asList(oi3));
+	
+	    p1.getItens().addAll(Arrays.asList(oi1));
+	    p2.getItens().addAll(Arrays.asList(oi2));
+	    p3.getItens().addAll(Arrays.asList(oi3));
+	    
+	    orderItemRepository.saveAllAndFlush(Arrays.asList(oi1, oi2, oi3));
+	    
 	}
+	
+	
 
 }
