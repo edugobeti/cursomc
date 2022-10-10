@@ -1,5 +1,6 @@
 package com.edugobeti.cursomc;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,20 @@ import com.edugobeti.cursomc.domain.Adress;
 import com.edugobeti.cursomc.domain.Category;
 import com.edugobeti.cursomc.domain.City;
 import com.edugobeti.cursomc.domain.Client;
+import com.edugobeti.cursomc.domain.CreditPayment;
+import com.edugobeti.cursomc.domain.Order1;
+import com.edugobeti.cursomc.domain.Payment;
 import com.edugobeti.cursomc.domain.Product;
 import com.edugobeti.cursomc.domain.State;
+import com.edugobeti.cursomc.domain.TicketPayment;
 import com.edugobeti.cursomc.domain.enuns.ClientType;
+import com.edugobeti.cursomc.domain.enuns.PaymentStatus;
 import com.edugobeti.cursomc.repository.AdressRepository;
 import com.edugobeti.cursomc.repository.CategoryRepository;
 import com.edugobeti.cursomc.repository.CityRepository;
 import com.edugobeti.cursomc.repository.ClientRepository;
+import com.edugobeti.cursomc.repository.OrderRepository;
+import com.edugobeti.cursomc.repository.PaymentRepository;
 import com.edugobeti.cursomc.repository.ProductRepository;
 import com.edugobeti.cursomc.repository.StateRepository;
 
@@ -40,6 +48,12 @@ public class CursomcApplication implements CommandLineRunner{
 	
 	@Autowired
 	AdressRepository adressRepository;
+	
+	@Autowired
+	OrderRepository orderRepository;
+	
+	@Autowired
+	PaymentRepository paymentRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursomcApplication.class, args);
@@ -90,7 +104,24 @@ public class CursomcApplication implements CommandLineRunner{
 		
 	    clientRepository.saveAll(Arrays.asList(cli1));
 	    
-	    adressRepository.saveAllAndFlush(Arrays.asList(a1, a2));
+	    adressRepository.saveAll(Arrays.asList(a1, a2));
+	    
+	    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm"); 
+	   
+	    Order1 o1 = new Order1(null, sdf.parse("30/09/2017 10:32"), cli1, a1);
+	    Order1 o2 = new Order1(null, sdf.parse("10/10/2017 19:35"), cli1, a2);
+
+	    cli1.getOrders().addAll(Arrays.asList(o1, o2));
+	   
+	    Payment pay1 = new CreditPayment(null, PaymentStatus.QUITADO, o1, 6);
+	    o1.setPayment(pay1);
+	    
+	    Payment pay2 = new TicketPayment(null, PaymentStatus.PENDENTE, o2, sdf.parse("20/10/2017 00:00"), null);
+	    o2.setPayment(pay2);
+	    		
+	    orderRepository.saveAll(Arrays.asList(o1, o2));
+	   
+	    paymentRepository.saveAll(Arrays.asList(pay1, pay2));
 	}
 
 }

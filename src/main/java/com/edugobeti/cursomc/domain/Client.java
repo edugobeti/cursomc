@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 import com.edugobeti.cursomc.domain.enuns.ClientType;
@@ -37,6 +38,9 @@ public class Client implements Serializable{
 	@ElementCollection
 	@CollectionTable(name = "PHONES")
 	private Set<String> phone = new HashSet<>();
+	
+	@OneToMany(mappedBy = "client")
+	private List<Order1> orders = new ArrayList<>();
 	
 	public Client(){
 	}
@@ -105,6 +109,14 @@ public class Client implements Serializable{
 
 	public void setPhone(Set<String> phone) {
 		this.phone = phone;
+	}
+	
+	public List<Order1> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order1> orders) {
+		this.orders = orders;
 	}
 
 	@Override
