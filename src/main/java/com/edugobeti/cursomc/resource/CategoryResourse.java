@@ -3,6 +3,7 @@ package com.edugobeti.cursomc.resource;
 import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.edugobeti.cursomc.domain.Category;
 import com.edugobeti.cursomc.service.CategoryService;
+import com.edugobeti.cursomc.service.exception.DataIntegratyException;
 
 @RestController
 @RequestMapping(value = "/categories")
@@ -39,6 +41,12 @@ public class CategoryResourse {
 	public ResponseEntity<Void> update(@RequestBody Category obj, @PathVariable Integer id){
 		obj.setId(id);
 		obj = service.update(obj);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable Integer id){
+			service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 }
