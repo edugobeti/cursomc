@@ -1,9 +1,11 @@
 package com.edugobeti.cursomc.resource;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.edugobeti.cursomc.DTO.CategoryDTO;
 import com.edugobeti.cursomc.domain.Category;
 import com.edugobeti.cursomc.service.CategoryService;
-import com.edugobeti.cursomc.service.exception.DataIntegratyException;
 
 @RestController
 @RequestMapping(value = "/categories")
@@ -48,6 +50,13 @@ public class CategoryResourse {
 	public ResponseEntity<Void> delete(@PathVariable Integer id){
 			service.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+
+	@RequestMapping( method = RequestMethod.GET)
+	public ResponseEntity<List<CategoryDTO>> findAll(){
+	List<Category> list = service.findAll();
+	List<CategoryDTO> listDTO = list.stream().map(obj -> new CategoryDTO(obj)).collect(Collectors.toList());
+ 		return ResponseEntity.ok().body(listDTO);
 	}
 }
 
