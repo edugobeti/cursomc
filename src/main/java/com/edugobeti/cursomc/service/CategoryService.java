@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.edugobeti.cursomc.DTO.CategoryDTO;
 import com.edugobeti.cursomc.domain.Category;
 import com.edugobeti.cursomc.repository.CategoryRepository;
 import com.edugobeti.cursomc.service.exception.DataIntegratyException;
@@ -56,6 +57,9 @@ public class CategoryService {
 		return repo.findAll(pageRequest);
 	}
 	
+	public Category fronDTO (CategoryDTO objDTO) {
+		return new Category(objDTO.getId(), objDTO.getName());
+	}
 	
 	
 	
