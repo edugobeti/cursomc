@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.edugobeti.cursomc.DTO.CategoryDTO;
 import com.edugobeti.cursomc.domain.Category;
+import com.edugobeti.cursomc.domain.Client;
 import com.edugobeti.cursomc.repository.CategoryRepository;
 import com.edugobeti.cursomc.service.exception.DataIntegratyException;
 import com.edugobeti.cursomc.service.exception.ObjectNotFoundException;
@@ -33,10 +34,10 @@ public class CategoryService {
 		obj.setId(null);
 		return repo.save(obj);
 	}
-	
 	public Category update(Category obj) {
-		find(obj.getId());
-		return repo.save(obj);
+		Category newObj = find(obj.getId());
+		updateData(newObj, obj);
+		return repo.save(newObj);
 	}
 	
 	public void delete(Integer id) {
@@ -61,6 +62,9 @@ public class CategoryService {
 		return new Category(objDTO.getId(), objDTO.getName());
 	}
 	
+	private void updateData(Category newObj, Category obj) {
+		newObj.setName(obj.getName());
+	}
 	
 	
 	
