@@ -30,6 +30,10 @@ public class OrderItem {
 		this.price = price;
 	}
 
+	public Double getSubtotal() {
+		return (price - off) * qtt;
+	}
+	
 	@JsonIgnore
 	public Order1 getOrder() {
 		return id.getOrder();
