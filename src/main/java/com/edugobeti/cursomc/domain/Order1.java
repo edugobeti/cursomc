@@ -79,7 +79,7 @@ public class Order1 implements Serializable {
 		this.instant = instant;
 	}
 
-	public Adress getAdressShipp1() {
+	public Adress getAdressShipp() {
 		return adressShipp;
 	}
 

@@ -3,8 +3,10 @@ package com.edugobeti.cursomc.domain;
 import javax.persistence.Entity;
 
 import com.edugobeti.cursomc.domain.enuns.PaymentStatus;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @Entity
+@JsonTypeName("creditPayment")
 public class CreditPayment extends Payment{
 	private static final long serialVersionUID = 1L;
 	
